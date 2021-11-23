@@ -25,9 +25,8 @@ public class Pg {
 
   private String endpoint;
 
-  private static Pg SINGLETON_INSTANCE;
 
-  private Pg(Constants.Environment env, String appId, String secretKey) {
+  public Pg(Constants.Environment env, String appId, String secretKey) {
     this.appId = appId;
     this.secretKey = secretKey;
 
@@ -39,10 +38,7 @@ public class Pg {
   }
 
   public static Pg getInstance(Constants.Environment env, String appId, String secretKey) {
-    if (SINGLETON_INSTANCE == null) {
-      SINGLETON_INSTANCE = new Pg(env, appId, secretKey);
-    }
-    return SINGLETON_INSTANCE;
+    return new Pg(env, appId, secretKey);
   }
 
   private Map<String, String> buildPostHeader() {

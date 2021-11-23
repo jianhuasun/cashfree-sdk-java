@@ -42,9 +42,8 @@ public class Payouts {
   private String bearerToken;
 
   private Long expiry;
-  private static Payouts SINGLETON_INSTANCE;
 
-  private Payouts(Environment env, String clientId, String clientSecret) {
+  public Payouts(Environment env, String clientId, String clientSecret) {
     this.clientId = clientId;
     this.clientSecret = clientSecret;
     this.mode = IP;
@@ -55,7 +54,7 @@ public class Payouts {
     }
   }
 
-  private Payouts(Environment env, String clientId, String clientSecret , String publicKeyPath) {
+  public Payouts(Environment env, String clientId, String clientSecret , String publicKeyPath) {
     this.clientId = clientId;
     this.clientSecret = clientSecret;
     if (publicKeyPath.length() == 0)
@@ -73,24 +72,18 @@ public class Payouts {
 
   public static String getEndpoint() { return endpoint;}
 
-  public static Payouts  getInstance(Environment env, String clientId, String clientSecret, String pubilcKeyPath) {
-    if (SINGLETON_INSTANCE == null) {
+  public  Payouts  getInstance(Environment env, String clientId, String clientSecret, String pubilcKeyPath) {
       if (pubilcKeyPath.length() == 0){
-        SINGLETON_INSTANCE = new Payouts(env, clientId, clientSecret);
-      }
-      else
-      {
-        SINGLETON_INSTANCE = new Payouts(env, clientId, clientSecret , pubilcKeyPath);
-      }
-    }
-    return SINGLETON_INSTANCE;
+          return  new Payouts(env, clientId, clientSecret);
+        }
+        else
+        {
+          return new Payouts(env, clientId, clientSecret , pubilcKeyPath);
+        }
   }
 
-  public static Payouts getInstance(Environment env, String clientId, String clientSecret ) {
-    if (SINGLETON_INSTANCE == null) {
-        SINGLETON_INSTANCE = new Payouts(env, clientId, clientSecret);
-    }
-    return SINGLETON_INSTANCE;
+  public static  Payouts getInstance(Environment env, String clientId, String clientSecret ) {
+    return new Payouts(env, clientId, clientSecret);
   }
 
   public boolean init() {
